@@ -1,0 +1,16 @@
+# 160 site (-35,-0.544,0) approached on foot: warp 10 units short (facing it), then walk forward through it
+load
+shot loaded
+at 4900
+shot before_walk
+stick 0 30000 150
+wait 30
+shot after_walk
+tap A x60 every 90
+shot t1
+tap A x60 every 90
+shot t2
+tap A x60 every 90
+shot t3
+tap A x60 every 90
+shot t4

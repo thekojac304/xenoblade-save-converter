@@ -1,0 +1,15 @@
+# from the 158 autosave position: walk towards Reyn (wider left), turn left to face him, then A for dialogue
+load
+shot loaded
+at 4500
+stick -21000 25000 80
+wait 20
+stick -30000 0 8
+wait 30
+shot faced
+tap A x20 every 90
+shot t1
+tap A x40 every 90
+shot t2
+tap A x40 every 90
+shot t3

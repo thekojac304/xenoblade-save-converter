@@ -1,0 +1,45 @@
+# Whitelist: only source, specs, tests, scripts and documentation are tracked.
+# Never tracked: game data (bdat/, data/, tables/, exe/), saves and emulator output (fixtures, runs, logs, work,
+# inputs, originals, rc_user, results, manifests), packaged builds (release_candidate*), screenshots, third-party
+# repositories (public/).
+/*
+!/.gitignore
+!/*.md
+!/inspect_saves.py
+!/tools/
+!/gui/
+!/specs/
+!/tests/
+!/tests_gui/
+!/phase2f/
+!/phase2g/
+!/phase2h/
+!/phase3a/
+!/phase3b/
+!/phase3c/
+!/phase3d/
+!/phase3e/
+!/phase3f/
+/phase*/*
+!/phase*/CHECKPOINT.md
+!/phase*/src/
+!/phase*/scripts/
+!/phase*/tests/
+!/phase*/tests_gui/
+!/phase*/tests_gui_*/
+!/phase*/gui/
+!/phase*/docs/
+!/phase3a/specs/
+!/phase3c/routes/
+!/phase3f/routes/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.sav
+*.bin
+*.png
+*.jpg
+*.zip
+*.gz
+*.log
+tools/desc_*.txt

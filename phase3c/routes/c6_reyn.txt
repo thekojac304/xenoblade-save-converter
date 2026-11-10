@@ -1,0 +1,13 @@
+# from the 158 autosave position (no warp): walk towards Reyn (screen left ~25 deg, ~10 units), then A for dialogue
+load
+shot loaded
+at 4500
+stick -14000 30000 75
+shot after_walk
+wait 30
+tap A x30 every 90
+shot t1
+tap A x30 every 90
+shot t2
+tap A x20 every 90
+shot t3

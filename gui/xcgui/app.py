@@ -1,0 +1,167 @@
+"""Application start-up, plus a scripted automation mode used to test the packaged build.
+
+  XCSaveConverter.exe                       normal start
+  XCSaveConverter.exe --automate job.json   drive the real window from a JSON job, write the outcome, exit
+  XCSaveConverter.exe --smoke result.json   start, show the window, capture it, close it, exit 0
+
+A job: {"source": path, "dest": path, "output_parent": path, "file_name": "bfsgame02.sav" (optional),
+        "record": path (optional: choose a conversion record), "start_fresh": bool, "dry_run": bool,
+        "overflow": bool, "no_current": bool, "data_dir": path, "settings": ini path, "result": path}.
+The automation fills the same widgets a user fills and presses the same button; it never bypasses the window.
+"""
+import json
+import os
+import sys
+import traceback
+
+
+def _setup_path():
+    if not getattr(sys, "frozen", False):
+        here = os.path.dirname(os.path.abspath(__file__))
+        tools = os.path.normpath(os.path.join(here, "..", "..", "tools"))
+        if tools not in sys.path:
+            sys.path.insert(0, tools)
+
+
+_setup_path()
+
+from PySide6.QtCore import QElapsedTimer, QSettings, Qt, QTimer  # noqa: E402
+from PySide6.QtGui import QGuiApplication  # noqa: E402
+from PySide6.QtWidgets import QApplication  # noqa: E402
+
+from . import APP_NAME, APP_VERSION  # noqa: E402
+
+
+def make_app(argv=None):
+    QGuiApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+    app = QApplication.instance() or QApplication(argv or sys.argv[:1])
+    app.setApplicationName(APP_NAME)
+    app.setApplicationVersion(APP_VERSION)
+    app.setOrganizationName("XCSaveConverter")
+    return app
+
+
+def _wait_idle(app, win, timeout_ms=120000):
+    """Process events until the engine is idle, no conversion runs and no history check is pending."""
+    t = QElapsedTimer()
+    t.start()
+    while t.elapsed() < timeout_ms:
+        app.processEvents()
+        if not win.engine.busy() and not win.running:
+            app.processEvents()
+            if not win.engine.busy() and not win.plan_pending:
+                return True
+        win.engine.wait(20)
+    return False
+
+
+def automate(job_path):
+    from .main_window import MainWindow
+    with open(job_path, encoding="utf-8") as f:
+        job = json.load(f)
+    app = make_app()
+    settings = QSettings(job.get("settings") or os.path.join(os.path.dirname(job["result"]), "automation.ini"),
+                         QSettings.Format.IniFormat)
+    if job.get("data_dir"):
+        settings.setValue("data_dir", job["data_dir"])
+    if job.get("output_parent"):
+        settings.setValue("output_parent", job["output_parent"])
+    win = MainWindow(settings=settings)
+    win.show()
+    out = {"ok": False}
+    try:
+        _wait_idle(app, win)
+        win.adv.opt_dry.setChecked(bool(job.get("dry_run")))
+        win.adv.opt_overflow.setChecked(bool(job.get("overflow")))
+        win.adv.opt_no_current.setChecked(bool(job.get("no_current")))
+        win.src_pick.set_path(job["source"])
+        _wait_idle(app, win)
+        if job.get("dest"):
+            win.dest_pick.set_path(job["dest"])
+            _wait_idle(app, win)
+        if job.get("record"):
+            win.chosen_record = job["record"]
+            win._gen += 1
+            win._plan()
+            _wait_idle(app, win)
+        if job.get("start_fresh") and win.plan and win.plan.issue == "same-playthrough":
+            win.start_fresh = True
+            win._gen += 1
+            win._plan()
+            _wait_idle(app, win)
+        if job.get("file_name"):
+            win.slot_combo.setCurrentText(job["file_name"])
+        win.refresh()
+        p = win.plan
+        out["plan"] = None if not p else {"mode": p.mode, "issue": p.issue, "record": p.sidecar,
+                                          "destination": p.dest_relation}
+        out["missing"] = win.missing()
+        out["source_preview"] = win.src_info.text()
+        out["dest_preview"] = win.dest_info.text()
+        out["file_name"] = win.slot_combo.currentText()
+        if not out["missing"]:
+            win.convert_btn.click()
+            _wait_idle(app, win)
+        out["page"] = "result" if win.stack.currentIndex() == 1 else "form"
+        out["result_title"] = win.res_title.text() if out["page"] == "result" else win.fail_notice.title.text()
+        out["result_detail"] = win.fail_notice.detail.text()
+        if win.last_result:
+            r = win.last_result
+            out.update(ok=True, out_dir=r.out_dir, main_output=r.main_output, sidecar=r.sidecar_path,
+                       written=r.written, dry_run=r.dry_run)
+    except Exception as e:
+        out["exception"] = f"{type(e).__name__}: {e}"
+        out["traceback"] = traceback.format_exc()
+    finally:
+        win.close()
+        app.processEvents()
+    with open(job["result"], "w", encoding="utf-8") as f:
+        json.dump(out, f, indent=1)
+    return 0 if out.get("ok") else 1
+
+
+def smoke(result_path):
+    from .main_window import MainWindow
+    app = make_app()
+    settings = QSettings(os.path.join(os.path.dirname(os.path.abspath(result_path)), "smoke.ini"),
+                         QSettings.Format.IniFormat)
+    win = MainWindow(settings=settings)
+    win.resize(*initial_size(app))
+    win.show()
+    info = {}
+
+    def done():
+        import paths
+        info.update(title=win.windowTitle(), visible=win.isVisible(), setup_notice=win.setup_notice.isVisible(),
+                    frozen=bool(getattr(sys, "frozen", False)), executable=sys.executable,
+                    spec_found=os.path.isfile(paths.spec("wii_award_tiers.json")), next=win.next_label.text(),
+                    dpr=win.devicePixelRatioF(), style=app.style().name(),
+                    color_scheme=str(app.styleHints().colorScheme()), size=[win.width(), win.height()])
+        win.grab().save(os.path.splitext(result_path)[0] + ".png")
+        win.close()
+        app.quit()
+
+    QTimer.singleShot(1500, done)
+    app.exec()
+    with open(result_path, "w", encoding="utf-8") as f:
+        json.dump(info, f, indent=1)
+    return 0
+
+
+def initial_size(app):
+    avail = app.primaryScreen().availableGeometry()
+    return min(700, int(avail.width() * 0.9)), min(600, int(avail.height() * 0.9))   # fits small laptops
+
+
+def main(argv=None):
+    argv = list(sys.argv if argv is None else argv)
+    if "--automate" in argv:
+        return automate(argv[argv.index("--automate") + 1])
+    if "--smoke" in argv:
+        return smoke(argv[argv.index("--smoke") + 1])
+    from .main_window import MainWindow
+    app = make_app(argv[:1])
+    win = MainWindow()
+    win.resize(*initial_size(app))
+    win.show()
+    return app.exec()

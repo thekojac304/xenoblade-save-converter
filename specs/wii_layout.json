@@ -1,0 +1,489 @@
+{
+ "game": "Xenoblade (Wii) SX4E01",
+ "endianness": "big",
+ "file_size": 163840,
+ "sections": [
+  {
+   "tag": "THUM",
+   "header": 16,
+   "crc_start": 32,
+   "crc_end": 40096
+  },
+  {
+   "tag": "FLAG",
+   "header": 40992,
+   "crc_start": 41008,
+   "crc_end": 45636
+  },
+  {
+   "tag": "GAME",
+   "header": 45648,
+   "crc_start": 45664,
+   "crc_end": 73352
+  },
+  {
+   "tag": "TIME",
+   "header": 73376,
+   "crc_start": 73392,
+   "crc_end": 73404
+  },
+  {
+   "tag": "PCPM",
+   "header": 73424,
+   "crc_start": 73440,
+   "crc_end": 73492
+  },
+  {
+   "tag": "CAMD",
+   "header": 73504,
+   "crc_start": 73520,
+   "crc_end": 73536
+  },
+  {
+   "tag": "ITEM",
+   "header": 73552,
+   "crc_start": 73568,
+   "crc_end": 147584
+  },
+  {
+   "tag": "WTHR",
+   "header": 147584,
+   "crc_start": 147600,
+   "crc_end": 147616
+  },
+  {
+   "tag": "SNDS",
+   "header": 147632,
+   "crc_start": 147648,
+   "crc_end": 147664
+  },
+  {
+   "tag": "MINE",
+   "header": 147680,
+   "crc_start": 147696,
+   "crc_end": 148596
+  },
+  {
+   "tag": "TBOX",
+   "header": 148624,
+   "crc_start": 148640,
+   "crc_end": 149204
+  },
+  {
+   "tag": "OPTD",
+   "header": 149664,
+   "crc_start": 149680,
+   "crc_end": 149744
+  }
+ ],
+ "crc": "CRC-16/ARC (poly 0xA001 reflected, init 0) at section header +0xE",
+ "game_section": {
+  "base": 45664,
+  "game_object_bytes": 16880,
+  "party": {
+   "offset": 53758,
+   "stride": 4,
+   "type": "u16"
+  },
+  "map": {
+   "offset": 45664,
+   "type": "u32 (sub<<16)|area"
+  },
+  "serializer": "0x8023E414",
+  "loader": "0x8023F5B8"
+ },
+ "character_record": {
+  "base": 62544,
+  "size": 772,
+  "count": 14,
+  "index": "character ID (0 unused)",
+  "names": {
+   "1": "Shulk",
+   "2": "Reyn",
+   "3": "Fiora",
+   "4": "Dunban",
+   "5": "Sharla",
+   "6": "Riki",
+   "7": "Melia",
+   "8": "Fiora (Mechon)",
+   "9": "Dickson",
+   "10": "Mumkhar",
+   "11": "Alvis",
+   "12": "Dunban (prologue)",
+   "13": "Dunban (alt)"
+  },
+  "fields": [
+   {
+    "offset": 0,
+    "size": 2,
+    "name": "id",
+    "class": "field",
+    "evidence": "C 0x8023E4AC"
+   },
+   {
+    "offset": 2,
+    "size": 12,
+    "name": "equip_gid",
+    "class": "field",
+    "evidence": "C copy; D 36/36 refs resolve"
+   },
+   {
+    "offset": 14,
+    "size": 12,
+    "name": "equip_row",
+    "class": "field",
+    "evidence": "C copy; D = ITM_itemlist.itemID"
+   },
+   {
+    "offset": 26,
+    "size": 2,
+    "name": "pad_1a",
+    "class": "unknown",
+    "evidence": ""
+   },
+   {
+    "offset": 28,
+    "size": 12,
+    "name": "equip_box_index",
+    "class": "field",
+    "evidence": "C copy; D 36/36 refs resolve (0xFFFF = none)"
+   },
+   {
+    "offset": 40,
+    "size": 160,
+    "name": "armour_stat_cache",
+    "class": "derived",
+    "evidence": "D (arm_phy/arm_eth per slot) derived"
+   },
+   {
+    "offset": 200,
+    "size": 32,
+    "name": "weapon_stat_cache",
+    "class": "derived",
+    "evidence": "D derived"
+   },
+   {
+    "offset": 232,
+    "size": 48,
+    "name": "art_levels",
+    "class": "field",
+    "evidence": "C 0x800A2000 (art byte at +0xE8+2*pc_arts.idx); D get_lv 118/118"
+   },
+   {
+    "offset": 280,
+    "size": 1,
+    "name": "palette_flag",
+    "class": "unknown",
+    "evidence": ""
+   },
+   {
+    "offset": 281,
+    "size": 8,
+    "name": "palette",
+    "class": "field",
+    "evidence": "C 0x800A2060 (+0x119)"
+   },
+   {
+    "offset": 289,
+    "size": 8,
+    "name": "palette_monado",
+    "class": "field",
+    "evidence": "C (+0x121)"
+   },
+   {
+    "offset": 297,
+    "size": 7,
+    "name": "talent_arts",
+    "class": "field",
+    "evidence": "C stb 0x41(r23) (+0x129)"
+   },
+   {
+    "offset": 304,
+    "size": 72,
+    "name": "unk_130",
+    "class": "unknown",
+    "evidence": ""
+   },
+   {
+    "offset": 376,
+    "size": 2,
+    "name": "unk_178",
+    "class": "unknown",
+    "evidence": ""
+   },
+   {
+    "offset": 378,
+    "size": 2,
+    "name": "pad_17a",
+    "class": "unknown",
+    "evidence": ""
+   },
+   {
+    "offset": 380,
+    "size": 4,
+    "name": "level",
+    "class": "field",
+    "evidence": "C 0x8023E544 rt+0x17CC"
+   },
+   {
+    "offset": 384,
+    "size": 116,
+    "name": "runtime_stats",
+    "class": "derived",
+    "evidence": "C 0x8023E544..0x8023E670 (HP/stat floats, rebuilt on load)"
+   },
+   {
+    "offset": 500,
+    "size": 143,
+    "name": "skill_rows",
+    "class": "field",
+    "evidence": "C 0x80260D58/0x80260E30 (11 rows x 13 B); learn routine 0x800A34C8"
+   },
+   {
+    "offset": 643,
+    "size": 1,
+    "name": "pad_283",
+    "class": "unknown",
+    "evidence": ""
+   },
+   {
+    "offset": 644,
+    "size": 4,
+    "name": "affinity_coins",
+    "class": "field",
+    "evidence": "C clamp 0..999 at 0x802639C8; link-cost display 0x80268AB0"
+   },
+   {
+    "offset": 648,
+    "size": 20,
+    "name": "skill_sp",
+    "class": "field",
+    "evidence": "C serializer +0x94 (rt skill+0x888 = char+0x3DBC); learn routine compares point_PP*100"
+   },
+   {
+    "offset": 668,
+    "size": 4,
+    "name": "skill_selected_tree",
+    "class": "field",
+    "evidence": "C rt skill+0x89C (= char+0x3DD0)"
+   },
+   {
+    "offset": 672,
+    "size": 4,
+    "name": "exp_accum",
+    "class": "field",
+    "evidence": "C rt+0x177C; D = cumulative level cost for Shulk/Reyn"
+   },
+   {
+    "offset": 676,
+    "size": 4,
+    "name": "exp",
+    "class": "field",
+    "evidence": "C rt+0x1780; D < next level cost (7/7)"
+   },
+   {
+    "offset": 680,
+    "size": 4,
+    "name": "ap",
+    "class": "field",
+    "evidence": "C rt+0x1784"
+   },
+   {
+    "offset": 684,
+    "size": 20,
+    "name": "unk_2ac",
+    "class": "unknown",
+    "evidence": ""
+   },
+   {
+    "offset": 704,
+    "size": 1,
+    "name": "flag_2c0",
+    "class": "unknown",
+    "evidence": ""
+   },
+   {
+    "offset": 705,
+    "size": 67,
+    "name": "zero_tail",
+    "class": "unknown",
+    "evidence": ""
+   }
+  ],
+  "equip_slot_order": [
+   "head",
+   "body",
+   "arm",
+   "legs",
+   "feet",
+   "weapon"
+  ],
+  "skill_rows": {
+   "rows_0_4": "skill trees t: 6 entries; entry0 (b0,b1) header, entries 1-5 = nodes (u8 learned BTL_PSVskill id or 0, u8 state)",
+   "rows_5_10": "skill-link rows, source = other main characters 1..7 (excluding self) in ID order; node = (u8 linked skill id or 0, u8 1 = slot unlocked)",
+   "after_rows": {
+    "0x284": "u32 affinity coins",
+    "0x288": "u32[5] SP",
+    "0x29C": "u32 selected tree"
+   }
+  },
+  "art_levels": "24 x (u8 level, u8 manual flags) indexed by pc_arts.idx of this character"
+ },
+ "time": {
+  "offset": 73392,
+  "encoding": "u32 hours<<12 | minutes<<6 | seconds",
+  "evidence": "C 0x8023E98C (THUM)"
+ },
+ "item_section": {
+  "base": 73568,
+  "object_size": 74016,
+  "object": "memcpy of item object (r13-0x56C8) at 0x8023EC2C",
+  "box_getter": "0x80158490(type) -> base, count, record size",
+  "boxes": [
+   {
+    "name": "head",
+    "type": 4,
+    "object_offset": 0,
+    "file_offset": 73568,
+    "record_size": 52,
+    "slots": 163
+   },
+   {
+    "name": "body",
+    "type": 5,
+    "object_offset": 8476,
+    "file_offset": 82044,
+    "record_size": 52,
+    "slots": 163
+   },
+   {
+    "name": "arm",
+    "type": 6,
+    "object_offset": 16952,
+    "file_offset": 90520,
+    "record_size": 52,
+    "slots": 163
+   },
+   {
+    "name": "legs",
+    "type": 7,
+    "object_offset": 25428,
+    "file_offset": 98996,
+    "record_size": 52,
+    "slots": 163
+   },
+   {
+    "name": "feet",
+    "type": 8,
+    "object_offset": 33904,
+    "file_offset": 107472,
+    "record_size": 52,
+    "slots": 163
+   },
+   {
+    "name": "weapon",
+    "type": 2,
+    "object_offset": 42380,
+    "file_offset": 115948,
+    "record_size": 52,
+    "slots": 163
+   },
+   {
+    "name": "crystal",
+    "type": 9,
+    "object_offset": 50856,
+    "file_offset": 124424,
+    "record_size": 28,
+    "slots": 300
+   },
+   {
+    "name": "gem",
+    "type": 3,
+    "object_offset": 59256,
+    "file_offset": 132824,
+    "record_size": 16,
+    "slots": 300
+   },
+   {
+    "name": "artmanual",
+    "type": 13,
+    "object_offset": 64056,
+    "file_offset": 137624,
+    "record_size": 8,
+    "slots": 240
+   },
+   {
+    "name": "collectable",
+    "type": 10,
+    "object_offset": 65976,
+    "file_offset": 139544,
+    "record_size": 8,
+    "slots": 300
+   },
+   {
+    "name": "material",
+    "type": 11,
+    "object_offset": 68376,
+    "file_offset": 141944,
+    "record_size": 8,
+    "slots": 300
+   },
+   {
+    "name": "keyitem",
+    "type": 12,
+    "object_offset": 70776,
+    "file_offset": 144344,
+    "record_size": 8,
+    "slots": 200
+   }
+  ],
+  "equipment_slots": "0..149 inventory (visible count 60 + 10 per joined character + bonus <= 30); 150+charId = per-character staging record (0x80158308)",
+  "record_header": {
+   "bytes": 8,
+   "word0": "gid:12 | type:4 | row:11 | low5:5",
+   "+4": "u16 acquisition serial (kept on re-init)",
+   "+6": "u8 quantity (stack cap 99, 0x801588D8)",
+   "+7": "u8 flags",
+   "init": "0x80158BE4"
+  },
+  "equipment_record": {
+   "bytes": 52,
+   "+8": "4 x 8-byte gem descriptor (socket contents)",
+   "+0x28": "4 x u16 gem-box index of a socketed gem (0xFFFF = built-in/fixed or empty)",
+   "+0x30": "u8 socket count (ITM_*.jwl_slot, 0x80156554)",
+   "+0x31": "u8 kind 1-5 armour part, 6 weapon",
+   "+0x32": "u16"
+  },
+  "gem_record": {
+   "bytes": 16,
+   "+0": "header (row = effect; gid 3747 = crafted placeholder)",
+   "+8": "gem descriptor"
+  },
+  "gem_descriptor": {
+   "bytes": 8,
+   "word0": "gid-2048:11 | strength:11 | rank:3 (1=E..6=S) | chance:7",
+   "half4": "effect (BTL_skilllist):12 | category:3 | flag:1",
+   "half6": "u16 (0)",
+   "packer": "0x80156380"
+  },
+  "crystal_record": {
+   "bytes": 28,
+   "+0": "header (identity encoding unresolved)",
+   "+8": "20-byte payload (raw)"
+  },
+  "stack_record": {
+   "bytes": 8,
+   "layout": "header only"
+  },
+  "tail": {
+   "0x11AB8": "88 x 16 per-character type-3 records",
+   "0x12038": "u16[88]",
+   "0x120E8": "u32 money (cap 999,999,999)",
+   "0x120EC": "u16[14]",
+   "0x12108": "u32 per-character new-item mask",
+   "0x1210C": "u32 weapon new mask",
+   "0x12110": "u32 capacity bonus (cap 30)",
+   "0x12114": "u16[5] armour new masks"
+  }
+ }
+}

@@ -1,0 +1,80 @@
+# E2: skip travel x2 (Colony 9 Gem Man's Stall, Frontier Village), quest log, save -> W3
+load
+shot
+tap X
+wait 1500
+tap LEFT x3 every 600
+wait 800
+tap A
+wait 3500
+tap DOWN
+wait 800
+tap A
+wait 3000
+tap A
+wait 2000
+shot
+tap A
+wait 12000
+shot
+wait 3000
+shot
+tap X
+wait 1500
+tap LEFT x3 every 600
+wait 800
+tap A
+wait 3500
+shot
+tap DOWN x8 every 500
+wait 800
+shot
+tap A
+wait 3000
+tap A
+wait 2000
+shot
+tap A
+wait 12000
+shot
+wait 3000
+shot
+tap X
+wait 1500
+tap RIGHT
+wait 700
+tap A
+wait 1500
+tap A
+wait 3000
+shot
+tap B
+wait 1500
+tap B
+wait 1500
+tap B
+wait 1500
+tap X
+wait 1500
+tap RIGHT x3 every 600
+wait 800
+tap A
+wait 2000
+tap A
+wait 2500
+tap A
+wait 2500
+tap UP
+wait 800
+shot
+tap A
+wait 6000
+shot
+tap A
+wait 2000
+tap B
+wait 1500
+tap B
+wait 1500
+shot
+wait 5000

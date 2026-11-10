@@ -1,0 +1,24 @@
+# reload the scenario-160 autosave in a new process, show the field, then save normally (System > Save > slot > Yes)
+load
+shot loaded
+at 5200
+shot field
+tap PLUS
+wait 120
+shot save_menu
+tap A
+wait 150
+shot save_list
+tap A
+wait 150
+shot save_confirm
+tap A
+wait 300
+shot save_done
+tap B
+wait 60
+tap B
+wait 60
+tap B
+wait 120
+shot end

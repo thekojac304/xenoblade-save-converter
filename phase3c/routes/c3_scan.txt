@@ -1,0 +1,6 @@
+load
+shot loaded
+at 5400
+shot after_warp
+wait 600
+shot end

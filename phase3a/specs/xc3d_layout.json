@@ -1,0 +1,77 @@
+{
+ "game": "Xenoblade Chronicles 3D (New Nintendo 3DS), product KTR-P-CAFE v1.0 (USA), title ID 000400000F700100",
+ "source_of_truth": "phase3a/src/xc3d.py (SCHEMA covers every byte; checked at import). Evidence: XC_THREE_WAY_PHASE3A.md section 3.",
+ "save_archive": {
+  "files": ["monado01", "monado02", "monado03"],
+  "empty_slot": "DMMY payload (header 'YMMD' + zeros, 0xE3 tail)",
+  "other": "specialmode (Special Mode / extras, not a playthrough slot; not converted)",
+  "emulator_path": "<user>/sdmc/Nintendo 3DS/<id0>/<id1>/title/00040000/0f700100/data/00000001/ + 00000001.metadata"
+ },
+ "container": {
+  "0x00": "char[4] '!qzb'",
+  "0x04": "u32le decompressed size = 0x28000",
+  "0x08": "u32le size of the QuickLZ block",
+  "0x0C": "one QuickLZ 1.5 level-3 block: flags 0x4F, u32le block size, u32le decompressed size, control words + data",
+  "note": "phase3a/src/qlz.py recompresses every game-written file byte-identically"
+ },
+ "payload": {
+  "size": "0x28000 (data 0x0..0x248F0, rest 0xE3 fill)",
+  "relation_to_wii": "the Wii SX4E layout at identical offsets, little-endian scalars, C bitfields LSB-first (armcc) instead of MSB-first (CodeWarrior), same declaration order",
+  "file_header": {"0x00": "u32 tag 'USRD' (bytes 'DRSU')", "0x04": "u32 0x248F0", "0x08": "u32 0x10", "0x0C": "u32 version 0x00070003 (Wii 0x00070002)"},
+  "section_header": {"+0x0": "u32 tag", "+0x4": "u32 section size", "+0x8": "u32 0x10", "+0xC": "u32 CRC-16/XMODEM (poly 0x1021, init 0) of [crc_start, crc_end) (Wii: u16 0 + CRC-16/ARC)"},
+  "fill": "struct padding and inter-section space = 0xE3 (heap fill); the Wii writes 0"
+ },
+ "sections": [
+  {"tag": "THUM", "header": "0x10", "data": ["0x20", "0x9CA0"], "writer": "0x351238",
+   "fields": {"+0x00": "u16 scenario", "+0x02": "u8 minute, u8 second", "+0x04": "u16 year, u16 month", "+0x08": "u8 hour, u8 day",
+              "+0x0A": "u16 play hours, u16 play minutes, u16 map area", "+0x10": "u8 0, u8 map sub, 2 x 0",
+              "+0x14": "u32 party[8]", "+0x34": "u32 x3 (game +0x1FBC)", "+0x40": "u32", "+0x44": "char[32] leader name",
+              "+0x64": "u16 leader level", "+0x66": "u8 slot, u8", "+0x80": "116x164 thumbnail (3DS); Wii: fixed 0x40-byte header + zeros"}},
+  {"tag": "FLAG", "header": "0xA020", "data": ["0xA030", "0xB244"], "type": "u32 words (32/16/8/1-bit banks, LSB-relative shifts as on the Wii)"},
+  {"tag": "GAME", "header": "0xB250", "data": ["0xB260", "0x11E88"], "writer": "0x34ED7C (memcpy 0x41F0 + 14 character records)",
+   "regions": {
+    "0xB260": "2 x {u16 map sub, u16 map area, char[0x20] name}",
+    "0xB2A8": "u32 x3 (inferred), u16 x2 (value 1,1 in every sample)",
+    "0xB2B8": "s8 quest objective counters [1000][8]",
+    "0xD1F8": "u8 + 3 pad",
+    "0xD1FC": "u32 party[8], u32 x4",
+    "0xD22C": "u32 x12 (inferred, zero in samples)",
+    "0xD25C": "minimap bit array (byte + LSB bit), Collectopaedia bits from 0xEAC6, to 0xEAEE; 2 pad",
+    "0xEAF0": "u8[0x500]",
+    "0xEFF0": "u32[256]",
+    "0xF3F0": "u8[0x20] (inferred)",
+    "0xF410": "u16[32]",
+    "0xF450": "character record[14] (0x304 each, ID = index)"}},
+  {"tag": "TIME", "header": "0x11EA0", "data": ["0x11EB0", "0x11EBC"], "fields": {"+0x0": "bitfield32 {hours:20, minutes:6, seconds:6}", "+0x4": "f32 time of day", "+0x8": "u16 day, u16 year"}},
+  {"tag": "PCPM", "header": "0x11ED0", "data": ["0x11EE0", "0x11F14"], "fields": {"+0x0": "3 x {f32 x, y, z, angle}", "+0x30": "u32"}},
+  {"tag": "CAMD", "header": "0x11F20", "data": ["0x11F30", "0x11F40"], "fields": {"+0x0": "f32 x3, u32"}},
+  {"tag": "ITEM", "header": "0x11F50", "data": ["0x11F60", "0x24080"], "boxes": "as the Wii (specs/wii_layout.json); records below",
+   "tail": {"+0x11AB8": "gem record[88]", "+0x12038": "u16[88]", "+0x120E8": "u32 money", "+0x120EC": "u16[14]", "+0x12108": "u32 x3", "+0x12114": "u16[5]", "+0x1211E": "2 x 0"}},
+  {"tag": "WTHR", "header": "0x24080", "data": ["0x24090", "0x240A0"], "fields": {"+0x0": "u32", "+0x4": "u16 x6"}},
+  {"tag": "SNDS", "header": "0x240B0", "data": ["0x240C0", "0x240D0"], "fields": {"+0x0": "f32 x3, u32"}},
+  {"tag": "MINE", "header": "0x240E0", "data": ["0x240F0", "0x24474"], "fields": {"+0x0": "150 x {u16, u8 x4}"}},
+  {"tag": "TBOX", "header": "0x24490", "data": ["0x244A0", "0x246D4"], "fields": {"+0x0": "u32 count", "+0x4": "20 x treasure_chest"}},
+  {"tag": "OPTD", "header": "0x248A0", "data": ["0x248B0", "0x248F0"], "fields": {"+0x0": "u8 options"}}
+ ],
+ "structs": {
+  "item_header": {"size": 8, "+0x0": "bitfield32 {gid:12, type:4, row:11, rank:3, sub:2}", "+0x4": "u16 acquisition age", "+0x6": "u8 quantity", "+0x7": "bitfield8 {atr_type:6, kind:2}"},
+  "gem_descriptor": {"size": 8, "+0x0": "bitfield32 {gid-2048:11, strength:11, rank:3, chance:7}", "+0x4": "bitfield16 {effect:12, category:3, flag:1}", "+0x6": "u16"},
+  "equipment_record": {"size": "0x34", "+0x0": "item_header", "+0x8": "gem_descriptor[4]", "+0x28": "u16 gem box index[4]", "+0x30": "u8 socket count, u8 kind", "+0x32": "u16"},
+  "gem_record": {"size": "0x10", "+0x0": "item_header", "+0x8": "gem_descriptor"},
+  "crystal_record": {"size": "0x1C", "+0x0": "item_header", "+0x8": "bitfield16 {effect:12, low:4}[4]", "+0x10": "u16", "+0x12": "u8 value[4], u8, u8", "+0x18": "bitfield16 {cylinder:1, source:15}", "+0x1A": "u16"},
+  "stack_record": {"size": 8, "+0x0": "item_header"},
+  "character_record": {"size": "0x304",
+   "+0x000": "u16 id, u16 equip gid[6], u16 equip row[6], 2 pad",
+   "+0x01C": "u16 equip box index[6]",
+   "+0x028": "armour cache[5] = u16[16] ([9] dodge, [11] phys def, [12] ether def, [13] armour type)",
+   "+0x0C8": "weapon cache: f32 range near*0.01, f32 range far*0.01, f32 speed*0.1, u16 dmg low, dmg high, att_lev, 0, block, phys def, ether def, 0, u8 weapon type, u8 element, u16 flag",
+   "+0x0E8": "u8 art levels [24][2], palette flag, palettes, talent arts, u8[0x48]",
+   "+0x178": "u16, 2 pad", "+0x17C": "u32 level", "+0x180": "f32 x6 (current HP, .., max HP at +0x18C)",
+   "+0x198": "u16[16] (strength, agility, ether, ...)", "+0x1B8": "f32/u32 x15", "+0x1F4": "u8 skill rows [11][13], 1 pad",
+   "+0x284": "u32 affinity coins, SP[5], selected tree, EXP accum, EXP, AP", "+0x2AC": "u16 x2, u8 x5, 3 pad", "+0x2B8": "f32 x2",
+   "+0x2C0": "u8, u8", "+0x2C2": "u16[31] (record 0 only)", "+0x300": "u8, 3 pad",
+   "3ds_note": "the 3DS loads +0x17C..+0x1F4 and the caches as live values (no recompute on load): xc3dstats rebuilds them exactly as the game's level-up routine (0x2AB6B0) and Monado scaling (0x277300)"},
+  "treasure_chest": {"size": "0x1C", "wii": "u32 0, f32 x4, u32 kind, u16, u8, u8", "3ds": "u32 0, f32 x4, u16 kind, u16, u8, u8, 2 x 0"}
+ },
+ "inferred_not_proven": ["GAME 0xB2A8..0xB2B8", "GAME 0xD22C..0xD25C", "GAME 0xF3F0..0xF410", "character +0x1A0..+0x1B4", "character +0x1B8..+0x1F4"]
+}

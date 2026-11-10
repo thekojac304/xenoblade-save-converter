@@ -1,0 +1,71 @@
+{
+ "ids": {
+  "items": "identity for global IDs 1-3765 (all Wii items exist in DE with identical type/row; DE adds 3766-4657)",
+  "arts": "identity 1-152",
+  "skills": "identity 1-200 (BTL_PSVskill)",
+  "skill_link_shapes": "identity (MNU_PSset 64/64)",
+  "gem_effects": "identity 1-97 (BTL_skilllist)",
+  "crystals": "ITM_crystallist identical (600/600); save identity encoding unresolved"
+ },
+ "character": {
+  "level": "copy",
+  "exp": "copy (Wii +0x2A4)",
+  "ap": "copy (Wii +0x2A8)",
+  "affinity_coins": "copy (Wii +0x284)",
+  "highest_level": "= level",
+  "highest_level_exp": "keep template (0 on a template whose level is rewritten)",
+  "reserve_exp": "keep template",
+  "exp_accum (Wii +0x2A0)": "no DE target identified; not written",
+  "equipment": "(index, type) = (Wii box index, box type); inventory slot allocation is identity",
+  "skill_selected_tree": "copy",
+  "skill_sp": "copy",
+  "skill_learned": "count of non-zero nodes in Wii rows 0-4",
+  "links": "Wii row 5+j -> DE source id = j-th other character; node value copied",
+  "link_unlock_index": "(unlocked slots - 1); DE also re-derives from affinity at 0xBC240 (monotonic)",
+  "arts": "DE art[id-1] = Wii art_levels[pc_arts.idx] for pc_arts.pc == character",
+  "palette": "[talent] + Wii palette",
+  "palette2": "Shulk: [talent] + Wii Monado palette; others: keep template",
+  "stats/HP/caches": "derived; not written (DE recomputes on load)",
+  "cosmetic": "keep template (0)",
+  "characters 8-16": "keep template"
+ },
+ "inventory": {
+  "slot": "Wii index",
+  "serial": "Wii serial; DE counter @0x46900+4*type = max(template, max serial + 1)",
+  "qty": "copy",
+  "favorite": "0 (Wii has none)",
+  "unknown_0a": "template value",
+  "gem": {
+   "gid": "0 if Wii gid 3747 else Wii gid",
+   "rank/effect/strength/chance": "copy",
+   "attribute": "BTL_skilllist.atr_type"
+  },
+  "sockets": {
+   "normal": "Wii gem_box_ref -> DE normal ref (index, 3)",
+   "fixed": "Wii descriptor gid -> DE fixed (gid, 1)"
+  },
+  "staging slots 150-162": "not converted",
+  "crystals": "unresolved"
+ },
+ "progress": {
+  "money": "copy",
+  "play_time": "Wii packed time -> seconds at DE header +0x04",
+  "map": "Wii GAME+0 u32 -> DE 0x149C00",
+  "position": "Wii PCPM slot 0 xyz -> DE 0x149C10",
+  "angle": "radians(Wii degrees) -> DE 0x149C20",
+  "location_word_0x149C04": "template; DE recomputes"
+ },
+ "phase2d": {
+  "crystal": {
+   "wii": "flags = atr_type<<2 | kind (1 list, 2 drop, 3 crafting cylinder); rank = (w0>>2)&7; effects u16[4]@+8 (>>4); values u8[4]@+0x12; +0x18 = cylinder<<15 | source enemy",
+   "de": "gid (list: Wii gid; else 0), +0x14 source, +0x16 rank, +0x17 atr, +0x18 named (drop: 2 if DE BTL_enelist*.named else 1; others 1), +0x19 cylinder, +0x1A count, +0x1C+4i (u16 effect, u8 value, u8 0)",
+   "evidence": "Wii vtable 0x8052FA48; DE 0xC19D0, 0xBF15C, name 0xC2DBC"
+  },
+  "collectopaedia": "Wii game object +0x3866 bit id (0x8009F5F0, id = ITM_collectlist row) -> DE bit 0x19E9+id",
+  "highest_level_exp_0xF0": "= current EXP (DE 0xBA9CC adds every battle EXP to both; reset at new highest level)",
+  "reserve_exp_0xF4": "template (Expert Mode only, 0xBA9D0)",
+  "stack_padding_0x0A": "template slot bytes (no writer in 0x9AB60 / 0xBF350)",
+  "achievement_counters": "per tier: comp_value if Wii completion bit, else min(group max, comp_value) (groups = runs of increasing comp_value, comp_type 4)",
+  "inventory_box_clear": "template box records replaced by the template's empty-slot pattern before writing Wii records"
+ }
+}

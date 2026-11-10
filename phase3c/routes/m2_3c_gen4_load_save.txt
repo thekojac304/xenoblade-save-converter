@@ -1,0 +1,30 @@
+# Phase 3B acceptance M2: load the Sync Hub's generation-4 DE save (Wii save from Dolphin, which continued the 3DS
+# battle save, which continued Monado's own save) in Monado, show the main menu (party, levels), save in-game.
+load
+shot field
+at 4540
+tap X
+wait 30
+shot mainmenu_party
+at 4660
+tap B
+at 4750
+tap PLUS
+wait 150
+shot sysmenu
+tap A
+wait 180
+shot save_list
+tap A
+wait 180
+shot save_confirm
+tap A
+wait 330
+shot save_done
+tap B
+wait 90
+tap B
+wait 90
+tap B
+wait 120
+shot end
