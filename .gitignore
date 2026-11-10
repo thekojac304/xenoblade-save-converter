@@ -5,6 +5,7 @@
 /*
 !/.gitignore
 !/*.md
+!/docs/
 !/inspect_saves.py
 !/tools/
 !/gui/
@@ -43,3 +44,4 @@ __pycache__/
 *.gz
 *.log
 tools/desc_*.txt
+!/docs/images/*.png
