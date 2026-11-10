@@ -43,9 +43,7 @@ folder and needs no installation or Python:
 - `xcconv.exe` is the converter on the command line.
 - `xcsync.exe` is the Sync Hub on the command line.
 
-**You must supply your own game tables.** The converter needs `bdat_wii.json` and `bdat_de.json`, which you make from
-your own copies of the games with `tools/dump_bdat.py`. They are game data, so they aren't included. The app asks
-for them on first start.
+**One-time game-data setup, inside the app.** The converter needs game tables taken from your own copies of the games. On first start, click **Set up game data…** and point it at your extracted Wii game files (the `files` folder, for example from Dolphin's *Extract Entire Disc*) and your Definitive Edition romfs dump. The app builds the tables itself; no Python or other tools are needed. The tables are game data, so they aren't included in the download.
 
 ## Features
 
