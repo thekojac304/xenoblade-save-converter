@@ -36,7 +36,7 @@ with no loss. Details: [THREE_WAY_COMPATIBILITY.md](THREE_WAY_COMPATIBILITY.md),
 
 ## Download
 
-`XCSaveConverter-3F-rc1-win-x64.zip` is on the [Releases page](../../releases). It's a portable Windows 10/11 x64
+[`XCSaveConverter-3F-rc1-win-x64.zip`](https://github.com/thekojac304/xenoblade-save-converter/releases/download/3F-rc1/XCSaveConverter-3F-rc1-win-x64.zip) is on the [3F-rc1 release](https://github.com/thekojac304/xenoblade-save-converter/releases/tag/3F-rc1). It's a portable Windows 10/11 x64
 folder and needs no installation or Python:
 
 - `XCSaveConverter.exe` is the desktop app, with a **Sync Hub** tab and a **Convert one save** tab.
