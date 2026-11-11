@@ -36,7 +36,7 @@ with no loss. Details: [THREE_WAY_COMPATIBILITY.md](THREE_WAY_COMPATIBILITY.md),
 
 ## Download
 
-[`XCSaveConverter-3F-rc1-win-x64.zip`](https://github.com/thekojac304/xenoblade-save-converter/releases/download/3F-rc1/XCSaveConverter-3F-rc1-win-x64.zip) is on the [3F-rc1 release](https://github.com/thekojac304/xenoblade-save-converter/releases/tag/3F-rc1). It's a portable Windows 10/11 x64
+[`XCSaveConverter-3F-rc1.1-win-x64.zip`](https://github.com/thekojac304/xenoblade-save-converter/releases/download/3F-rc1.1/XCSaveConverter-3F-rc1.1-win-x64.zip) is on the [3F-rc1.1 release](https://github.com/thekojac304/xenoblade-save-converter/releases/tag/3F-rc1.1) (3F-rc1 with license files added; the programs are unchanged). It's a portable Windows 10/11 x64
 folder and needs no installation or Python:
 
 - `XCSaveConverter.exe` is the desktop app, with a **Sync Hub** tab and a **Convert one save** tab.
@@ -149,7 +149,9 @@ description. Dolphin, Azahar and Syncthing are used as external tools only.
 
 ## License
 
-No license has been chosen; all rights are reserved by the author. The Windows package bundles the Python runtime
-(PSF license), Qt 6/PySide6 (LGPLv3, dynamically linked) and the PyInstaller bootloader (GPL with the bootloader
-exception). No game executables, ROMs, keys, game tables or saves are included.
+MIT ([LICENSE](LICENSE)) for the converter's own code and documentation. The Windows package also contains the
+Python runtime (PSF), OpenSSL (Apache-2.0), Qt 6 and PySide6 (LGPLv3, dynamically linked and replaceable) and the
+PyInstaller bootloader (GPL with the bootloader exception). Their license texts are in the package's `LICENSES\`
+folder; details in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). No game executables, ROMs, keys, game tables or
+saves are included.
 *Xenoblade Chronicles* is a trademark of Nintendo and Monolith Soft. This project isn't affiliated with them.

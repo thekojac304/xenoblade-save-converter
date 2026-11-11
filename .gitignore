@@ -5,6 +5,7 @@
 /*
 !/.gitignore
 !/*.md
+!/LICENSE
 !/docs/
 !/inspect_saves.py
 !/tools/
